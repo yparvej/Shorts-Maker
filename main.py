@@ -5,21 +5,30 @@ import verse_handler
 from Fonts import Fonts
 
 # Define paths and values
-number_of_videos = 1
+number_of_videos = 2
 project_dir = os.getcwd().replace("\\", "/")
 
 video_folder = f"{project_dir}/videos"
 audio_folder = f"{project_dir}/audio"
-json_file = f"{project_dir}/sources/verses_data/love_data.json"
+# json_file = f"{project_dir}/sources/verses_data/love_data.json"
+json_file = f"{project_dir}/sources/books_data/books_data.json"
 fonts_dir = f"{project_dir}/sources/fonts"
 output_folder = f"{project_dir}/customers"
-text_source_font = f'{project_dir}/sources/MouldyCheeseRegular-WyMWG.ttf'.replace(":/", "\:/")
+# text_source_font = f'{project_dir}/sources/MouldyCheeseRegular-WyMWG.ttf'.replace(":/", "\:/")
+text_source_font = f'{project_dir}/sources/tungab.ttf'.replace(":/", "\:/")
 image_file = f"{project_dir}/sources/logo.png"
-customer_name = "your_name"
+customer_name = "avalokana"
 verse_text_image_path = f"{project_dir}/verse_images/{customer_name}"
-fonts_paths = [f'{project_dir}/sources/fonts/CoffeeJellyUmai.ttf', f'{project_dir}/sources/fonts/CourierprimecodeRegular.ttf', f'{project_dir}/sources/fonts/FlowersSunday.otf', f'{project_dir}/sources/fonts/GreenTeaJelly.ttf', f'{project_dir}/sources/fonts/HeyMarch.ttf', f'{project_dir}/sources/fonts/LetsCoffee.otf', f'{project_dir}/sources/fonts/LikeSlim.ttf', f'{project_dir}/sources/fonts/SunnySpellsBasicRegular.ttf', f'{project_dir}/sources/fonts/TakeCoffee.ttf', f'{project_dir}/sources/fonts/WantCoffee.ttf']
-fonts_sizes = [95, 70, 65, 85, 75, 50, 75, 87, 50, 65]
-fonts_maxcharsline = [34, 25, 30, 45, 33, 34, 35, 32, 35, 35]
+
+fonts_paths = [f'{project_dir}/sources/fonts/CoffeeJellyUmai.ttf', f'{project_dir}/sources/fonts/CourierprimecodeRegular.ttf', f'{project_dir}/sources/fonts/FlowersSunday.otf', f'{project_dir}/sources/fonts/GreenTeaJelly.ttf', f'{project_dir}/sources/fonts/HeyMarch.ttf', f'{project_dir}/sources/fonts/LetsCoffee.otf', f'{project_dir}/sources/fonts/LikeSlim.ttf', f'{project_dir}/sources/fonts/SunnySpellsBasicRegular.ttf', f'{project_dir}/sources/fonts/TakeCoffee.ttf', f'{project_dir}/sources/fonts/WantCoffee.ttf', f'{project_dir}/sources/fonts/tungab.ttf']
+
+# fonts_paths = [f'{project_dir}/sources/fonts/tungab.ttf']
+
+# fonts_sizes = [85]
+# fonts_maxcharsline = [34]
+
+fonts_sizes = [95, 70, 65, 85, 75, 50, 75, 87, 50, 65,65]
+fonts_maxcharsline = [34, 25, 30, 45, 33, 34, 35, 32, 35, 35,35]
 # project_dir = os.getcwd()
 # font_dir = "C:/Windows/Fonts"
 

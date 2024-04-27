@@ -88,10 +88,13 @@ def create_videos(video_folder, audio_folder, json_file, fonts_dir, output_folde
 
         # Choose a random font from list
         random_font_num = fonts_num[0]
+        #Make always the random font as Tunga 
+        random_font_num = 10
         del fonts_num[0]
         font_file = fonts.fonts_path[random_font_num]
         font_size = fonts.fonts_size[random_font_num]
         font_chars = fonts.fonts_chars_limit[random_font_num]
+        print(f"font_file: {font_file}, font_size: {font_size}, font_chars: {font_chars}")
 
         # Choose a random audio file from the list
         random_audio_num = audios_num[0]
@@ -103,7 +106,7 @@ def create_videos(video_folder, audio_folder, json_file, fonts_dir, output_folde
         text_source_for_name = text_source_for_image.replace(' ', '')
 
         file_name = f"/{i}-{text_source_for_name}_{random_video_num}_{random_audio_num}_{random_font_num}.mp4"
-
+        print(f"text_source_font: {text_source_font}")
         create_video(text_verse=text_verse, text_source=text_source, text_source_font=text_source_font,
                      text_source_for_image=text_source_for_image,
                      video_file=video_file, audio_file=audio_file, image_file=image_file,
@@ -174,12 +177,13 @@ def create_video(text_verse, text_source, text_source_font, text_source_for_imag
         text2_y = 1200
         image_text_source_y -= diff
 
-    # print(f"{image_text_source_y}, {text2_y}")
+    print(f"{image_text_source_y}, {text2_y}")
 
     # fix bug that ':' and beyond wasn't showing on screen
     text_source = text_source.replace(':', '\:')
     output_folder = output_path
     output_path += f"/{file_name}"
+    print(f"text_source_font: {text_source_font}")
     # FFMPEG command to overlay images and text onto input video
     ffmpeg_command = (f'ffmpeg -loglevel error -stats -y -loop 1 -i "{image_file}" -i "{audio_file}" '
                       f'-i "{video_file}" -i "{created_verse_image}" -r 24 -filter_complex '
@@ -190,6 +194,46 @@ def create_video(text_verse, text_source, text_source_font, text_source_for_imag
                       f'enable=\'between(t,{text_start_time},{video_duration})\'[v2]; '
                       f'[v2][3:v]overlay=(W-w)/2:{image_text_source_y}:enable=\'between(t,{text_start_time},{video_duration})\'[v3]" '
                       f'-t {video_duration} -map "[v3]" -map 1 -c:v libx264 -preset veryfast -crf 18 "{output_path}"')
+    print(ffmpeg_command)
+    # ffmpeg_command = f'ffmpeg -version'
+    ffmpeg_command = ['ffmpeg', '-version']
+    ffmpeg_command = [
+    'ffmpeg', '-loglevel', 'error', '-stats', '-y', '-loop', '1', 
+    '-i', '/Users/yunusparvej/workpackages/ws_content_creation/Shorts-Maker/sources/logo.png', 
+    '-i', '/Users/yunusparvej/workpackages/ws_content_creation/Shorts-Maker/audio/sad-piano-background-music-for-videos-7573.mp3', 
+    '-i', '/Users/yunusparvej/workpackages/ws_content_creation/Shorts-Maker/videos/48.mp4', 
+    '-i', '/Users/yunusparvej/workpackages/ws_content_creation/Shorts-Maker/customers/your_name/verse_images/1 Corinthians 1614-6.png', 
+    '-r', '24', 
+    '-filter_complex', "[2:v][0:v]overlay=(W-w)/2:0[v1]; [v1]drawtext=fontfile='/Users/yunusparvej/workpackages/ws_content_creation/Shorts-Maker/sources/MouldyCheeseRegular-WyMWG.ttf':text='1 Corinthians 16\\:14':x=(w-text_w)/2:y=953:fontsize=42:fontcolor=white:enable='between(t,1,12.791667)'[v2]; [v2][3:v]overlay=(W-w)/2:800:enable='between(t,1,12.791667)'[v3]", 
+    '-t', '12.791667', 
+    '-map', '[v3]', 
+    '-map', '1', 
+    '-c:v', 'libx264', 
+    '-preset', 'veryfast', 
+    '-crf', '18', 
+    '/Users/yunusparvej/workpackages/ws_content_creation/Shorts-Maker/customers/your_name//0-1Corinthians1614_52_20_3.mp4'
+    ]
+
+    ffmpeg_command = [
+    'ffmpeg', '-loglevel', 'error', '-stats', '-y', '-loop', '1', 
+    '-i', image_file, 
+    '-i', audio_file, 
+    '-i', video_file, 
+    '-i', created_verse_image, 
+    '-r', '24', 
+    '-filter_complex', f"[2:v][0:v]overlay=(W-w)/2:{image_y}[v1]; [v1]drawtext=fontfile='{text_source_font}':text='{text_source}':x=(w-text_w)/2:y={text2_y}:fontsize=42:fontcolor={font_color}:enable='between(t,{text_start_time},{video_duration})'[v2]; [v2][3:v]overlay=(W-w)/2:{image_text_source_y}:enable='between(t,{text_start_time},{video_duration})'[v3]", 
+    '-t', str(video_duration), 
+    '-map', '[v3]', 
+    '-map', '1', 
+    '-c:v', 'libx264', 
+    '-preset', 'veryfast', 
+    '-crf', '18', 
+    output_path
+    ]
+
+
+    # ffmpeg_command = ['ffmpeg', '-loglevel', 'error', '-stats', '-y', '-loop', '1', '-i']
+
     # WITHOUT LOGO
     # ffmpeg_command = (f'ffmpeg -loglevel error -stats -y -loop 1 -i "{audio_file}" '
     #                   f'-i "{video_file}" -i "{created_verse_image}" -r 24 -filter_complex '

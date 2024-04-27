@@ -17,6 +17,7 @@ def create_image(text, font_path, font_size, max_char_count, image_size, save_pa
 
     # Load selected font
     font = ImageFont.truetype(font=f'{font_path}', size=font_size)
+    font = ImageFont.truetype(font=f'{font_path}', size=42)
     # font_ref = ImageFont.truetype(font='C:/Bots/ShortsMaker/sources/MouldyCheeseRegular-WyMWG.ttf', size=42)
 
     # Create DrawText object
